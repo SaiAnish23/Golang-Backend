@@ -4,10 +4,12 @@ import (
 	"flag"
 	"log"
 	"os"
+
+	"github.com/ilyakaznacheev/cleanenv"
 )
 
 type HTTPServer struct {
-	Address string
+	Address string `yaml:"address"  env-required:"true"`
 }
 
 type Config struct {
@@ -16,7 +18,7 @@ type Config struct {
 	HTTPServer  `yaml:"http_server" env-required:"true"`
 }
 
-func MustLoad() {
+func MustLoad() *Config {
 	var configPath string
 
 	configPath = os.Getenv("CONFIG_PATH")
@@ -36,4 +38,11 @@ func MustLoad() {
 		log.Fatalf("config file not found: %s", configPath)
 	}
 
+	var cfg Config
+	err := cleanenv.ReadConfig(configPath, &cfg)
+	if err != nil {
+		log.Fatalf("failed to load config: %v", err)
+	}
+
+	return &cfg
 }
