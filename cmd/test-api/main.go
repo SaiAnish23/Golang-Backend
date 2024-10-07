@@ -11,6 +11,7 @@ import (
 	"time"
 
 	"github.com/SaiAnish23/Golang-Backend/internal/config"
+	"github.com/SaiAnish23/Golang-Backend/internal/http/handlers/test"
 )
 
 func main() {
@@ -19,9 +20,7 @@ func main() {
 
 	router := http.NewServeMux()
 
-	router.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
-		w.Write([]byte("Hello World"))
-	})
+	router.HandleFunc("POST /api/test", test.New())
 
 	server := http.Server{
 		Addr:    cfg.Address,
