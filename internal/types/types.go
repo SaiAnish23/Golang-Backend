@@ -13,3 +13,10 @@ type Student struct {
 	Email string `validate:"required"`
 	Age   int    `validate:"gte=0,lte=100"`
 }
+
+type Teacher struct {
+	Id    int
+	Name  string `validate:"required"`
+	Email string `validate:"required"`
+	Age   int    `validate:"gte=0,lte=100"`
+}
